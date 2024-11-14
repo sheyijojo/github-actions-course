@@ -1,2 +1,2 @@
-# my-workflows
-Github workflows sample
+# test-my-workflows
+Github workflows samples
