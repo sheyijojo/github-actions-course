@@ -2,7 +2,7 @@
 - Need to share artifact for the next jobs
 - upload buildartifact actions in the marketplace
 - Download a Build Artiact in the market place
-- Artifact are available in github for downloads
+- Artifact are available in github for downloads- stored in 90days- for free accounts.
 
 ```yaml
 name: Genrate ASVII Art work
