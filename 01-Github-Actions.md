@@ -1,0 +1,39 @@
+## Executing multiple jobs
+
+```yaml
+name: Genrate ASVII Art work
+on:
+  push
+jobs:
+  build_job_1:
+    needs: test_job_2
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install Cowsay Program
+      run: sudo apt-get install cowsay -y
+
+    - name: Execute Cowsay CMD
+      run: cowsay -f dragon "Run for cover, I am a Dragon....RAWR" >> dragon.txt
+
+    - name: sleep for 30 seconds
+      run: sleep 30
+
+  test_job_2:
+      needs: build_job_1
+      runs-on: ubuuntu-latest
+      steps:
+      - name: Sleep for 10 seconds
+        run: sleep 10
+      - name: Test File exists
+        run: grep -i "dragon" dragon.txt
+
+  deploy_job_3:
+      needs: [test_job_2]
+      runs-on: ubuntu-latest
+      steps:
+      - name: Read File
+        run: cat dragon.txt
+
+
+
+```
