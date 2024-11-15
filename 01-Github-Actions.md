@@ -1,7 +1,8 @@
 ## Executing multiple jobs
 - Need to share artifact for the next jobs
 - upload buildartifact actions in the marketplace
-- Download a Build Artiact in the market place 
+- Download a Build Artiact in the market place
+- Artifact are available in github for downloads
 
 ```yaml
 name: Genrate ASVII Art work
