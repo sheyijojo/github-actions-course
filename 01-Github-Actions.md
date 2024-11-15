@@ -1,4 +1,7 @@
 ## Executing multiple jobs
+- Need to share artifact for the next jobs
+- upload buildartifact actions in the marketplace
+- Download a Build Artiact in the market place 
 
 ```yaml
 name: Genrate ASVII Art work
@@ -17,6 +20,11 @@ jobs:
 
     - name: sleep for 30 seconds
       run: sleep 30
+    - name: Upload Dragon text file
+      uses: actions/upload-artifact@v4
+      with:
+        name: dragon-text-file
+        path: dragon.txt
 
   test_job_2:
       needs: build_job_1
@@ -26,6 +34,15 @@ jobs:
         run: sleep 10
       - name: Test File exists
         run: grep -i "dragon" dragon.txt
+
+      - name: Download Dragon text file
+      - uses: actions/download-artifact@v4
+        with:
+          name: dragon-text-file
+         
+      - name: Display structure of downloaded files
+        run: ls -R
+##add download to deploy jobs as well 
 
   deploy_job_3:
       needs: [test_job_2]
