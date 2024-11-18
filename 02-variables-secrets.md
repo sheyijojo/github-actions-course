@@ -2,5 +2,5 @@
 name: Exploring variables and secrets 
 
 on:
-   push
+   #push
 jobs:
