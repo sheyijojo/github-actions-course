@@ -7,7 +7,7 @@
 ```yaml
 name: Genrate ASVII Art work
 on:
-  push
+  #push
 jobs:
   build_job_1:
     needs: test_job_2
