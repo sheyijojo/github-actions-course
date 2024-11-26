@@ -102,3 +102,10 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
 ```
+>First, the workflow file must exist in the .github/workflows directory. It's common practice to name a workflow that publishes a new package whenever a new release is created something like release-package.yml, to make it easy for project collaborators to understand its purpose without navigating to the workflow file.
+
+>The preceding workflow does a few things after a new release is created:
+
+>A job named build runs npm ci ("ci" for Continuous Integration) to install dependencies directly from the package-lock.json file, as well as the tests for the project.
+>Once the build job succeeds, the job named publish-gpr publishes the package.
+>The workflow publishes the package to the registry-url: https://npm.pkg.github.com/ using an access token for authentication.
