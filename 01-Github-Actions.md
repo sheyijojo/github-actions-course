@@ -29,10 +29,11 @@ jobs:
 
   test_job_2:
       needs: build_job_1
-      runs-on: ubuuntu-latest
+      runs-on: ubuntu-latest
       steps:
       - name: Sleep for 10 seconds
         run: sleep 10
+        
       - name: Test File exists
         run: grep -i "dragon" dragon.txt
 
@@ -44,6 +45,17 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 ##add download to deploy jobs as well 
+
+
+  ascii_job:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Executing shell script
+        run: |
+          chmod +x ascii-script.sh
+          ./ascii-script.sh 
+
+
 
   deploy_job_3:
       needs: [test_job_2]
