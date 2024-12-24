@@ -90,3 +90,35 @@ env:
      run: grep -i "dragon" dragon.txt
      time-out-minutes: 1
 ```
+## USING Matrix
+
+```yml
+name: Matrix Configuration
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+    deploy:
+      strategy:
+        fail-fast: false
+        max-parallel: 2
+        matrix:
+          os: [ubuntu-latest, ubuntu-20.04, windows-latest]
+          images: [hello-world, alpine]
+          exclude:
+            - images: alpine
+              os: windows-latest
+          include:
+            - images: amd64/alpine
+              os: ubuntu-20.04
+      runs-on: ${{ matrix.os }}
+      steps:
+      - name: Echo Docker Details
+        run: docker info
+
+      - name: Run Image on ${{ matrix.os }}
+        run: docker run ${{ matrix.images }}
+
+```
