@@ -67,3 +67,26 @@ jobs:
 
 
 ```
+## prevent the same actions running simultanouesly
+
+```yml
+use concurrency:
+on the job or workflow level
+
+name: exploring concurrency
+on:
+  workflow_dispatch
+env:
+  CONTAINER_REGISTRY: docker.io
+  IMAGE_NAME: github-actions-nginx
+
+  deploy:
+   needs: docker
+   concurrency: 
+     group: production-deploy
+     cancel-in-progress: false
+   steps:
+   - name: Test File exists
+     run: grep -i "dragon" dragon.txt
+     time-out-minutes: 1
+```
