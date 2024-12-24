@@ -102,8 +102,8 @@ on:
 jobs:
     deploy:
       strategy:
-        fail-fast: false
-        max-parallel: 2
+        fail-fast: false ##prevent cancelling all in-progress jobs if any matrix fails. Default true 
+        max-parallel: 2 ##control number of jobs to run in parallel 
         matrix:
           os: [ubuntu-latest, ubuntu-20.04, windows-latest]
           images: [hello-world, alpine]
@@ -122,3 +122,53 @@ jobs:
         run: docker run ${{ matrix.images }}
 
 ```
+## Contexts
+```yaml
+## A set of predefined objs or vars that contain info about a workflow run 
+## contexts are a way to access info about a workflow runs, vars, runner env, jobs and steps 
+
+name: Context testing
+on: push
+
+jobs:
+  dump_contexts_to_log:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+
+```
+
+## using if expression 
+
+```yaml
+deploy:
+##using GITHUB context, using the ref 
+   if: github.ref == 'refs/heads/main'
+   needs: docker 
+
+```
+
+## workflow event filters and activity types
