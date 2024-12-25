@@ -174,9 +174,59 @@ deploy:
 ## workflow event filters and activity types
 
 ```yml
-name: workflow filters and Activities
 
-on:
+e.g pull_request event has activity types such as:
+- assigned 
+- closed
+- locked 
+- ready_for_review etc
+
+e.g push event does not have activity but one can filter based on e.g which branch to push to 
+
+
+name:  Workflow Filters and Activities
+
+on:  
   workflow_dispatch:
+#   schedule:
+#     - cron: "*/59 * * * *"
+  push:
+    branches:
+        - main
+        - '!feature/*'    # ignoring pushing to any branch name starting with feature using !    
+    # branches-ignore:  
+    #   - feature/*     # feature/add-music, feature/updateImages
+    #   - test/**       # test/ui/index, test/checkout/payment/
 
+  pull_request:
+    types:
+      - opened
+      - closed
+    paths-ignore:       #  workflow will only run when a pull request that includes a change on any file other than README.md
+      - README.md
+    branches:
+        - main          # configures your workflow to only run on pull requests that target specific branches. 
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo this workflow/job/step is executed for event type -  ${{ github.event_name }} ## using context here 
+
+
+
+## cancelling and skipping workflows
+triggered by push and pull_request event by including command in your commit message 
+- [skip ci]
+- [ci skip]
+- no ci
+- [skip actions ]
+- [actions skip]
+
+Alternatively, you can use 
+skip-checks:true
+
+On the commit message:
+
+[skip ci]
 ```
