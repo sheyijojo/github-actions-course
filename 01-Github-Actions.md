@@ -230,3 +230,33 @@ On the commit message:
 
 [skip ci]
 ```
+
+## matrix task
+
+```yml
+name: Installing Python
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      #max-parallel: 2
+      matrix:
+        os: [ubuntu-latest, macos-14, windows-latest]
+        py-version: ["3.10", "3.11", "3.12"]
+      #include:
+       #  - os: macos-14
+       #    python-version: 3.10.0-beta.3
+         
+    
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        py-version: ${{ matrix.python-version }}
+        
+
+
+```
