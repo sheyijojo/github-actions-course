@@ -172,3 +172,11 @@ deploy:
 ```
 
 ## workflow event filters and activity types
+
+```yml
+name: workflow filters and Activities
+
+on:
+  workflow_dispatch:
+
+```
